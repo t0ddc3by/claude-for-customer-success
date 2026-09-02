@@ -6,6 +6,13 @@ managed agents run multi-stage pipelines when triggered by a CSM for account-spe
 One event-driven agent triggers automatically when a CSQL reaches `won` status and produces
 an onboarding plan before the first CSM touchpoint.
 
+The Value-Based Selling expansion pack (vfa + vbs plugins) adds three scheduled agents that run
+the acquisition side of the Expanded Triaxial Model: the quarterly feedback loop, monthly drift
+surveillance, and weekly deal-keepability scanning. All three are depth-0 (no subagents),
+read-and-report, and structurally incapable of applying a gate change without human approval;
+their cookbooks follow the deployment-complete pattern (README + agent.yaml + steering-examples,
+behavioral spec in the plugin's Layer 1 agent file).
+
 ---
 
 ## Agent Directory
@@ -23,6 +30,9 @@ an onboarding plan before the first CSM touchpoint.
 | [`advocacy-agent`](./advocacy/) | csm | On-demand | Advocacy Package: burnout-protected advocate qualification, ask script or story structure, cs-platform task creation |
 | [`churn-intelligence-agent`](./churn-intelligence/) | renewals | On-demand | Churn Intelligence Report (8 sections) written to cs-platform: signal timeline, churn drivers, exit interview guide, postmortem, learnings, win-back assessment |
 | [`expansion-onboarding-agent`](./expansion-onboarding-agent/) | onboarding | Event-driven (CSQL → won) | Onboarding plan and CSM notification — triggered automatically when a CSQL reaches `won` status; plan delivered to Slack before first CSM touchpoint |
+| [`loop-runner`](./loop-runner/) | vfa | Quarterly | Value-First Acquisition loop readout: R1-R4 write-back routing, FM-C/D drift headline, weights re-fit as human-approval PROPOSAL only |
+| [`drift-sentinel`](./drift-sentinel/) | vfa | Monthly | Sellability-drift report: active Shadow-ICP clustering (realized-value trigger), override-cohort audit vs. budget, FM-C/D trend with gate-calibration reads |
+| [`deal-alignment-watcher`](./deal-alignment-watcher/) | vbs | Weekly (Friday) | Late-stage keepability drift digest: gate-dimension regressions, deal-axes SLIPPING divergences, EVB-unscheduled-at-contract list, one prioritized fix per deal |
 
 ---
 

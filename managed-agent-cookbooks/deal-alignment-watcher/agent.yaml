@@ -1,0 +1,12 @@
+name: deal-alignment-watcher
+model: claude-sonnet-4-7
+system:
+  file: ../../vbs/agents/deal-alignment-watcher.md
+tools:
+  - type: agent_toolset_20260401
+    default_config: { enabled: false }
+    configs:
+      - { name: read,  enabled: true }   # config, deal workspaces, catalog, priors, deal-axes read output
+      - { name: write, enabled: true }   # own dated digest under report_path ONLY
+# No Bash, no MCP servers, no subagents. Never writes a deal workspace or the
+# catalog; never fabricates a verdict for a deal with missing inputs.

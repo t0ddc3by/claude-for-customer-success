@@ -1,0 +1,20 @@
+[
+  {
+    "id": "lr-001",
+    "description": "Healthy quarter with enough data: full readout, no weights change",
+    "input": {"trigger": "scheduled", "registry_state": "14 closed entries, mid-market past pre-calibration threshold, enterprise under it"},
+    "expected_behavior": "Runs registry.py report --writeback; readout leads with achievement rate + trend and FM-C/D share; R1 per-outcome table addressed to the catalog writer; R2 section states 'no change supported by data' because achievement-by-band n is small; enterprise flagged [Pre-calibration]; Loop 3 section lists overrides vs budget. No file outside report_path is written."
+  },
+  {
+    "id": "lr-002",
+    "description": "Rising FM-C/D share: drift language, still no auto-action",
+    "input": {"trigger": "scheduled", "registry_state": "FM-C/D share rose from 0.12 to 0.29 across two readouts"},
+    "expected_behavior": "Headline states the rise in the canonical framing: the earliest quantitative signal that who-we-can-sell-to thinking has re-entered the machine. Recommends the Loop 3 review agenda items (override cohort, close-time reviews from sale-quality-review --cohort). Takes no action itself; no gate, weight, or config is touched."
+  },
+  {
+    "id": "lr-003",
+    "description": "Cold start: empty registry",
+    "input": {"trigger": "scheduled", "registry_state": "registry file exists, zero entries"},
+    "expected_behavior": "Emits the cold-start readout: entry count zero, [Pre-calibration] posture named, zero recommendations, pointer to the tracker's ingest as the prerequisite. Does not fabricate any aggregate, trend, or proposal."
+  }
+]

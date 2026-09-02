@@ -646,7 +646,7 @@ Practitioner deployment guides live in the repository under `deployment-cookbook
 ```
 deployment-cookbooks/
 ├── README.md                   # Reference build explanation and tailoring guidance
-└── solo-csm-cookbook.md        # Solo CSM deployment guide — full lifecycle, personal use
+└── solo-post-sales-cookbook.md        # Solo CSM deployment guide — full lifecycle, personal use
 ```
 
 ### Developer Tooling
@@ -691,7 +691,7 @@ The [`deployment-cookbooks/`](./deployment-cookbooks/) directory contains operat
 
 | Cookbook | Audience | Status |
 |----------|----------|--------|
-| [`solo-csm-cookbook.md`](./deployment-cookbooks/solo-csm-cookbook.md) | Individual CSMs deploying the full suite for solo use across the customer lifecycle | [PROPOSED] |
+| [`solo-post-sales-cookbook.md`](./deployment-cookbooks/solo-post-sales-cookbook.md) | Individual CSMs deploying the full suite for solo use across the customer lifecycle | [PROPOSED] |
 
 To add a cookbook for a different role, motion, or deployment variant, follow the instructions in [`deployment-cookbooks/README.md`](./deployment-cookbooks/README.md).
 

@@ -1,0 +1,41 @@
+{
+  "spec_version": "1.0",
+  "weights_version": "1.0.0",
+  "components": {
+    "firmographic_gate": 15,
+    "organizational_triggers": 15,
+    "value_alignment": 30,
+    "industry_fit": 8,
+    "deep_intelligence": 13,
+    "deal_size": 8,
+    "playbook_readiness": 7,
+    "buying_signals": 4
+  },
+  "firmographic_points": { "all_pass": 15, "all_pass_modifier_below_threshold": 12, "soft_fail_overridden": 8, "hard_fail": 0 },
+  "signal_deliverability_multipliers": {
+    "Fully Deliverable": 1.0,
+    "Partially Deliverable": 0.85,
+    "Conditionally Deliverable": 0.85,
+    "Aspirational": 0.4,
+    "Provisional": 0.3,
+    "Requires Investigation": 0.0,
+    "Not Supported": 0.0
+  },
+  "recency": { "fresh": 1.0, "at_half_life": 0.5, "floor_beyond_2x_half_life": 0.1 },
+  "s2_gate_min_density": 15,
+  "confidence_multipliers": { "Quantified": 1.0, "Benchmarked": 0.75, "Estimated": 0.5, "Directional": 0.25 },
+  "cost_to_serve_modifiers": { "Standard": 1.0, "Moderate": 0.85, "Heavy": 0.65, "Enterprise": 0.5 },
+  "arbitrage_bands": { "strong_min": 5.0, "standard_min": 3.0, "marginal_min": 2.0 },
+  "industry_points": { "primary": 8, "secondary": 5, "other": 3, "deprioritized": 0 },
+  "industry_override": { "min_value_alignment": 22, "min_net_value_ratio": 4.0, "override_points": 3 },
+  "contact_quality_points": { "dm_verified": 13, "influencer": 9, "dm_unverified": 6, "none": 0 },
+  "deal_size_points": { "enterprise": 8, "mid_market": 6, "standard": 3 },
+  "buying_signal_points": { "meeting_held": 4, "active_engagement": 3, "content_engagement": 2, "none": 0 },
+  "tiers": [
+    { "name": "Prime", "min": 80 },
+    { "name": "Strong", "min": 60 },
+    { "name": "Conditional", "min": 40 },
+    { "name": "Watch", "min": 20 },
+    { "name": "No Fit", "min": 0 }
+  ]
+}

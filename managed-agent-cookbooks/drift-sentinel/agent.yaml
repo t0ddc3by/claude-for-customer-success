@@ -1,0 +1,12 @@
+name: drift-sentinel
+model: claude-sonnet-4-7
+system:
+  file: ../../vfa/agents/drift-sentinel.md
+tools:
+  - type: agent_toolset_20260401
+    default_config: { enabled: false }
+    configs:
+      - { name: read,  enabled: true }   # scored-prospect, review, churn-FM records + priors
+      - { name: write, enabled: true }   # own dated report under report_path ONLY
+# No Bash, no MCP servers, no subagents, no sends. Watch-and-report by design:
+# below-threshold clusters are watch items, never reclassification triggers.

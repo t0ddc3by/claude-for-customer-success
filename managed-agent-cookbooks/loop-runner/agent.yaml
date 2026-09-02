@@ -1,0 +1,14 @@
+name: loop-runner
+model: claude-sonnet-4-7
+system:
+  file: ../../vfa/agents/loop-runner.md
+tools:
+  - type: agent_toolset_20260401
+    default_config: { enabled: false }
+    configs:
+      - { name: read,  enabled: true }   # config, registry path, prior readout
+      - { name: write, enabled: true }   # own readout + proposal files under report_path ONLY
+      - { name: bash,  enabled: true }   # exactly registry.py report --writeback and icvp_score.py --self-test
+# No MCP servers, no network, no subagents. All shared-surface writes are prohibited;
+# gate changes are emitted as PROPOSAL files requiring human approval via
+# /vfa:customize --propose-weights. See the Layer 1 spec's tool allocation table.

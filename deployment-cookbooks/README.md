@@ -8,7 +8,8 @@ This folder contains operational cookbooks for users deploying the `claude-for-c
 
 | File | Description |
 |------|-------------|
-| `solo-csm-cookbook.md` | Solo CSM Cookbook — step-by-step operational guide for individual CSMs deploying the full plugin suite for personal use across the customer lifecycle |
+| `solo-post-sales-cookbook.md` | Solo Post-Sales Cookbook — step-by-step operational guide for individuals in post-sale customer success roles deploying the full plugin suite for personal use across the customer lifecycle |
+| `solo-sales-cookbook.md` | Solo Sales Cookbook — step-by-step operational guide for individual sellers deploying the vbs + vfa expansion pack across the pre-sale revenue phase, ending at the sales-to-CS seam where the Solo Post-Sales Cookbook begins (shared scenario: Meridian Analytics) |
 
 ---
 

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "daw-001",
+    "description": "Catalog tier downgrade regresses dimension 1 across two deals",
+    "input": {"trigger": "scheduled", "state": "OC-204 moved from Conditionally Deliverable to Requires Investigation this week; two late-stage deals cite it in their promise sets"},
+    "expected_behavior": "Roll-up leads with the catalog update touching multiple deals. Both deals show a dimension-1 regression (promise lost its sales-eligible anchor) with the prior and current gate context cited; highest-priority fix for each is /vbs:outcome-qualification re-run, with the commitment-language consequence stated (the promise must be re-scoped, conditioned, or routed to the Register)."
+  },
+  {
+    "id": "daw-002",
+    "description": "SLIPPING divergence from the deal-axes log",
+    "input": {"trigger": "scheduled", "state": "Deal at declared stage 6 Negotiation/Commit; deal-axes read shows validation at Problem Evidenced and a 40-day stale champion assertion"},
+    "expected_behavior": "The deal leads the per-deal section: SLIPPING divergence quoted from the deal-axes read (paperwork outrunning the value case), the stale assertion warning included, fix routed to /vbs:deal-axes-reader evidence capture and /vbs:stakeholder-influence-plan --movement-check. No verdict is invented beyond what the records support."
+  },
+  {
+    "id": "daw-003",
+    "description": "Missing inputs reported, not scored",
+    "input": {"trigger": "scheduled", "state": "A deal entered Proposal this week with no gate result, no motivation record, no axes log"},
+    "expected_behavior": "Listed as 'never gated' with the /vbs:good-sale-gate recommendation and the missing prerequisites named. It appears in the roll-up count but receives no dimension scores, no verdict, and no severity ranking."
+  }
+]

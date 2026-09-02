@@ -1,6 +1,6 @@
 ---
 name: sales-cs-handoff-quality-scoring
-version: 1.0.0
+version: 1.1.0
 deployment_target: plugin
 status: PROPOSED
 description: "Scores each closed/won deal on five handoff dimensions (0–100). Pass threshold: 80. Below-threshold deals trigger a Linear issue assigned to the AE manager with 48-hour SLA. CS onboarding proceeds but CSM is notified of open issue. Dimensions: OCV entry referenced, trigger match, measurement source accessible, stakeholder map, risk flags documented. Triggers: 'handoff quality', 'handoff score', 'what's missing for [deal] handoff', 'CS handoff check', 'handoff completeness'."
@@ -194,3 +194,30 @@ Weekly digest:
 - G7: Every below-threshold flag includes named escalation path and owner
 - G8: Draft OCV entries do not satisfy D1
 - G6: Data-as-of required on all reads
+
+
+---
+
+## Dimension 6 (additive, v1.1.0): Value Commitment presence (active only when the vbs plugin is installed)
+
+[PROPOSED addendum, 2026-09-02]
+
+When the closed deal's workspace contains vbs `commitment_draft` entries (produced by
+`/vbs:value-commitment-builder`), score a sixth binary dimension alongside the original five:
+
+- **PASS:** at least one commitment draft exists per contracted outcome; every draft cites a
+  catalog OC-ID at a sales-eligible tier (Fully / Partially / Conditionally Deliverable,
+  roadmap-dependent false); the evidence plan names a customer-side source system; and the
+  Expected Value Baseline is captured verbatim or scheduled with a date.
+- **FAIL:** any contracted outcome lacks a draft, any draft cites a non-eligible tier, or the
+  EVB is seller-authored catalog language.
+
+Scoring: with vbs present, weight the six dimensions equally (each 16.67 of 100); pass
+threshold stays 80. Without vbs artifacts in the workspace, score the original five dimensions
+unchanged and note "vbs commitment layer: not present" in the output; absence of the plugin is
+not a deal defect.
+
+On FAIL, include the remediation route in the Linear issue: `/vbs:value-commitment-builder`
+for missing drafts, `/vbs:outcome-qualification` for tier violations. The companion review
+(`/vbs:sale-quality-review`) answers the adjacent question (was the sale good, not just
+documented), and Gate 0 should read both.

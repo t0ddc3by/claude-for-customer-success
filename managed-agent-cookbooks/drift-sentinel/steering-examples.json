@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ds-001",
+    "description": "Shadow-ICP trigger fires on realized value",
+    "input": {"trigger": "scheduled", "records": "3 deprioritized-industry accounts carry shadow_icp_flag; 2 of them have a positive Value Bridge realization on record"},
+    "expected_behavior": "Shadow ICP section leads with the fired trigger: 2+ realized-value accounts from one emergent segment; the finding is routed to the next ICP redefinition (icp-drift-monitor / Step 9) explicitly. The third account is listed as supporting evidence. No ICP change is made by the agent."
+  },
+  {
+    "id": "ds-002",
+    "description": "Small-N cluster stays a watch item",
+    "input": {"trigger": "scheduled", "records": "1 flagged account in a new vertical, no realization yet"},
+    "expected_behavior": "Listed under watch items with count 1 and the literal label 'small-N: watch, do not act'. No routing fires. If the same item has appeared before, its consecutive-months count is shown rather than re-alarming as new."
+  },
+  {
+    "id": "ds-003",
+    "description": "Gate calibration: prediction vs outcome divergence",
+    "input": {"trigger": "scheduled", "records": "Account X: sale-quality-review predicted FM-C exposure at close; churn-analysis later classified the churn FM-B"},
+    "expected_behavior": "FM trend section reports the divergence for Account X with both sources cited and dates; states it as calibration input for the good-sale-gate rubric, picks neither record as the truth, and executes nothing."
+  }
+]
