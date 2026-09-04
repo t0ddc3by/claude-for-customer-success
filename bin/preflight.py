@@ -153,14 +153,16 @@ def check_skill_md(skill_path: Path, plugin_root: Path) -> List[Finding]:
 
 
 def check_plugin_json(plugin_root: Path) -> List[Finding]:
-    """CHECK 6 — plugin.json description length ≤ 388 chars."""
+    """CHECK 6 — plugin.json description length ≤ 388 chars.
+
+    Silently skipped when .claude-plugin/plugin.json is absent. Some workflows
+    gitignore .claude-plugin/ and generate plugin.json at build time — in that
+    case CI can't check it, and the build script must run this validator
+    separately after generating the manifest.
+    """
     pj_path = plugin_root / ".claude-plugin" / "plugin.json"
     if not pj_path.exists():
-        return [Finding(
-            "BLOCK", "plugin_json_missing", ".claude-plugin/plugin.json",
-            f"plugin manifest not found at {pj_path.relative_to(plugin_root)}",
-            "Create .claude-plugin/plugin.json with at minimum name + version."
-        )]
+        return []  # optional at scan time — build-time check owns this
     try:
         pj = json.loads(pj_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as e:
@@ -294,13 +296,31 @@ def validate_plugin(plugin_root: Path) -> Tuple[int, int, List[Finding]]:
 
 
 def is_plugin_dir(path: Path) -> bool:
-    return (path / ".claude-plugin" / "plugin.json").is_file()
+    """A plugin directory has EITHER a plugin manifest OR at least one canonical
+    plugin subdirectory (skills/, hooks/, agents/, commands/).
+
+    The broader detection handles workflows where .claude-plugin/ is gitignored
+    (manifest generated at build time) so CI can still discover and validate
+    the tracked source content — SKILL.md, hooks.json, hook scripts, .mcp.json.
+    """
+    if (path / ".claude-plugin" / "plugin.json").is_file():
+        return True
+    for marker in ("skills", "hooks", "agents", "commands"):
+        if (path / marker).is_dir():
+            return True
+    return False
 
 
 def discover_plugins(parent: Path) -> List[Path]:
+    """Enumerate plugin directories under parent, skipping hidden dirs
+    (.git, .claude, .github, .venv, etc.) — those may have subdirs that
+    superficially match plugin marker patterns (e.g., .git/hooks/) but
+    are not plugins."""
     return sorted(
         p for p in parent.iterdir()
-        if p.is_dir() and is_plugin_dir(p)
+        if p.is_dir()
+        and not p.name.startswith(".")
+        and is_plugin_dir(p)
     )
 
 
@@ -354,7 +374,8 @@ def main(argv: List[str] | None = None) -> int:
         return 2
 
     print(f"PLUGIN PREFLIGHT — validating {len(plugins)} plugin(s)")
-    print(f"Checks: CHECKs 1-8 per plugin-validation-toolkit v1.3.1")
+    print(f"Checks: CHECKs 1-8 per plugin-validation-toolkit v1.3.1 "
+          f"(plugin.json check skips silently when file is absent)")
     print()
 
     total_blocks = 0
