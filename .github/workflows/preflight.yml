@@ -1,0 +1,60 @@
+name: Plugin Preflight
+
+on:
+  push:
+    paths:
+      - '*/.claude-plugin/plugin.json'
+      - '*/.mcp.json'
+      - '*/hooks/**'
+      - '*/skills/**'
+      - '*/agents/**'
+      - 'bin/preflight.py'
+      - '.github/workflows/preflight.yml'
+  pull_request:
+    paths:
+      - '*/.claude-plugin/plugin.json'
+      - '*/.mcp.json'
+      - '*/hooks/**'
+      - '*/skills/**'
+      - '*/agents/**'
+      - 'bin/preflight.py'
+      - '.github/workflows/preflight.yml'
+  workflow_dispatch: {}   # allow manual runs
+
+# Cancel superseded runs on the same ref
+concurrency:
+  group: preflight-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: Validate all plugins (CHECKs 1-8)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install PyYAML
+        run: pip install --quiet 'pyyaml>=6.0'
+
+      - name: Run preflight across all plugins in the monorepo
+        run: |
+          python bin/preflight.py --all --parent .
+
+      - name: Upload findings (on failure)
+        if: failure()
+        run: |
+          echo "::error::Plugin preflight failed. See job log above for BLOCK details."
+          echo "Reference: skills/plugin-preflight-validator/references/known-constraints.md"
+          echo "Fix each BLOCK finding and push again."
