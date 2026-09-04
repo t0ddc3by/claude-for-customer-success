@@ -890,6 +890,17 @@ Contributions are welcome. The workflow below keeps skill sources consistent acr
 - After editing, run `python3 scripts/sync-agent-skills.py` to propagate changes into all agent bundles that depend on that skill.
 - Run `python3 scripts/check.py` before committing. The check script lints every manifest, verifies all `system.file` / `skills.path` / `callable_agents.manifest` references resolve, and fails if any agent-plugin skill copy has drifted from its vertical-plugin source.
 
+**Plugin versions and manifests:**
+- `.claude-plugin/` is gitignored, so `<plugin>/.claude-plugin/plugin.json` is a **build artifact**, not source. The tracked source of truth is [`bin/manifests.yaml`](./bin/manifests.yaml).
+- To bump a version or edit a plugin description, edit `bin/manifests.yaml`, then run `python3 bin/generate-manifests.py` to write the manifests.
+- On a fresh clone, run `python3 bin/generate-manifests.py` **before** building or packaging anything — without it there are no manifests on disk.
+- `python3 bin/generate-manifests.py --check` reports drift between the on-disk manifests and the canonical source. `--list` prints the version table.
+- The generator refuses to emit a `description` over 388 characters (CHECK 6, the empirical Cowork backend ceiling), so an over-length description cannot reach a build.
+
+**Validation:**
+- `python3 bin/preflight.py --all --parent .` runs all 8 backend-constraint checks across every plugin. CI ([`.github/workflows/preflight.yml`](./.github/workflows/preflight.yml)) generates the manifests, then runs the same command on every push and PR that touches plugin source.
+- Constraint reference and discovery evidence: `skills/plugin-preflight-validator/references/known-constraints.md` in the workspace skills library.
+
 **Pull requests:**
 1. Fork the repository and create a feature branch from `main`.
 2. Make your changes following the skill-edit workflow above.

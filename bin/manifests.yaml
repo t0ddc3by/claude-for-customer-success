@@ -1,0 +1,124 @@
+# manifests.yaml — canonical source of truth for every plugin manifest.
+#
+# WHY THIS FILE EXISTS
+# `.claude-plugin/` is gitignored (see .gitignore line 33-34), so each
+# `<plugin>/.claude-plugin/plugin.json` lives only in a working tree. Version
+# bumps made during a build session did not survive a fresh clone. This file
+# is tracked; `bin/generate-manifests.py` writes the plugin.json files from it.
+#
+# WORKFLOW
+#   Bump a version    → edit `version:` here, then `python3 bin/generate-manifests.py`
+#   Fresh clone       → `python3 bin/generate-manifests.py` before building anything
+#   Verify no drift   → `python3 bin/generate-manifests.py --check`
+#
+# CONSTRAINTS ENFORCED BY THE GENERATOR
+#   - `description` must be <= 388 chars (CHECK 6, empirical Cowork ceiling;
+#     safe target <= 300). The generator refuses to write an over-length manifest,
+#     so this file cannot introduce a CHECK 6 failure downstream.
+#   - `name` must match the plugin directory name.
+#   - `version` must be semver-ish (N.N.N).
+#
+# Key order in the emitted JSON is normalized to name, version, description,
+# author regardless of the order here.
+
+plugins:
+
+  auq-resilience:
+    version: "1.1.0"
+    description: >-
+      Resilience layer for AskUserQuestion (AUQ). In Claude Code, hooks enforce
+      single-question-per-call, detect render failures, and inject a T2 prose
+      fallback. In Cowork (no hooks), ships the /auq command (force-prose,
+      status, reset); the T1/T2/T3 protocol is enforced via each plugin's
+      CLAUDE.md behavioral rules.
+    author:
+      name: SuccessCOACHING
+
+  claude-for-msft-365-install:
+    version: "0.1.2"
+    description: >-
+      Provision direct cloud access (Vertex AI, Bedrock, or LLM gateway) for the
+      Claude Office add-in. Generates the customized add-in manifest, walks
+      through Azure admin consent, and writes per-user config via Microsoft
+      Graph extension attributes.
+    author:
+      name: Anthropic
+      email: support@anthropic.com
+
+  cs-ops:
+    version: "1.0.1"
+    description: >-
+      Portfolio health analysis, segmentation modeling, capacity planning,
+      playbook auditing, data quality checks, and metric dashboards for Customer
+      Success Operations teams managing B2B SaaS portfolios.
+    author:
+      name: SuccessCOACHING
+
+  csm:
+    version: "1.0.7"
+    description: >-
+      Runs account research, call prep, QBRs, success plans, health score
+      reviews, risk flags, TARO play recommendations, and renewal readiness
+      checks for Customer Success Managers working B2B SaaS accounts.
+    author:
+      name: SuccessCOACHING
+
+  handoff:
+    version: "1.0.1"
+    description: >-
+      Stage 0 Sales-to-CS Handoff — validates incoming accounts, generates
+      internal meeting materials, builds customer-facing kickoff packages, and
+      runs the Gate 0 quality assessment before advancing an account to Stage 1
+      Onboarding.
+    author:
+      name: SuccessCOACHING
+      email: todd@successhacker.co
+
+  onboarding:
+    version: "1.0.1"
+    description: >-
+      Kickoff prep, onboarding plans, success criteria definition, milestone
+      tracking, blocker reviews, time-to-value analysis, and handoff
+      documentation for onboarding teams and implementation managers in B2B
+      SaaS.
+    author:
+      name: SuccessCOACHING
+
+  renewals:
+    version: "1.0.1"
+    description: >-
+      Renewal forecasting, churn risk assessment, expansion signal detection,
+      negotiation prep, price increase planning, and executive renewal summaries
+      for renewals managers and AMs owning GRR and NRR.
+    author:
+      name: SuccessCOACHING
+
+  rev-ops:
+    version: "1.1.1"
+    description: >-
+      Forecast intelligence, pipeline health, annual planning, CRM data quality,
+      revenue continuity, and deal desk governance for RevOps leads, CROs, and
+      CS Ops owning revenue operations.
+    author:
+      name: SuccessCOACHING
+
+  vbs:
+    version: "0.4.2"
+    description: >-
+      Value-Based Selling craft for AEs, SEs, and quota-carrying CSMs: Three Whys
+      discovery, outcome qualification, keepability gate, call prep, stakeholder
+      influence, value narrative, negotiation prep, objection reframing. Deal
+      stratum of Claude for VBS — outcome-aligned, survivable sales.
+    author:
+      name: SuccessCOACHING
+
+  vfa:
+    version: "0.3.2"
+    description: >-
+      Value-First Acquisition for revenue leaders, GTM strategists, and RevOps:
+      PMF existence proof, ICP eligibility, ICVP value-fit gating, and drift
+      monitoring. The system stratum of the Claude for Value-Based Selling
+      add-on. Answers 'who should want to buy?' with gates trained on
+      realized-value evidence, not reachability.
+    author:
+      name: SuccessCOACHING

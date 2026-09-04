@@ -9,6 +9,8 @@ on:
       - '*/skills/**'
       - '*/agents/**'
       - 'bin/preflight.py'
+      - 'bin/manifests.yaml'
+      - 'bin/generate-manifests.py'
       - '.github/workflows/preflight.yml'
   pull_request:
     paths:
@@ -18,6 +20,8 @@ on:
       - '*/skills/**'
       - '*/agents/**'
       - 'bin/preflight.py'
+      - 'bin/manifests.yaml'
+      - 'bin/generate-manifests.py'
       - '.github/workflows/preflight.yml'
   workflow_dispatch: {}   # allow manual runs
 
@@ -47,6 +51,14 @@ jobs:
 
       - name: Install PyYAML
         run: pip install --quiet 'pyyaml>=6.0'
+
+      # .claude-plugin/ is gitignored, so plugin.json does not exist in a fresh
+      # checkout and preflight's CHECK 6 (description <= 388 chars) would skip
+      # silently. Generating from the tracked bin/manifests.yaml first makes
+      # CHECK 6 live in CI instead of only at build time.
+      - name: Generate plugin manifests from canonical source
+        run: |
+          python bin/generate-manifests.py
 
       - name: Run preflight across all plugins in the monorepo
         run: |
