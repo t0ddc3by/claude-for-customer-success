@@ -1,19 +1,37 @@
 {
-  "hooks": [
-    {
-      "event": "PreToolUse",
-      "matcher": "ask_user_input_v0",
-      "command": "python3 ../auq-resilience/hooks/auq_hook.py"
-    },
-    {
-      "event": "PostToolUse",
-      "matcher": "ask_user_input_v0",
-      "command": "python3 ../auq-resilience/hooks/auq_hook.py"
-    },
-    {
-      "event": "UserPromptSubmit",
-      "matcher": ".*",
-      "command": "python3 ../auq-resilience/hooks/auq_hook.py"
-    }
-  ]
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "ask_user_input_v0",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "ask_user_input_v0",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
