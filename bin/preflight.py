@@ -18,7 +18,8 @@ Exit codes:
     2 — usage error or no plugins found
 
 Constraint reference: skills/plugin-preflight-validator/references/known-constraints.md
-Encodes CHECKs 1-8 from plugin-validation-toolkit v1.3.0 (2026-05-25).
+Encodes CHECKs 1-8 from plugin-validation-toolkit v1.3.2 (2026-09-04).
+CHECK 8c (inline hooks.json command traversal) added in v1.3.2.
 
 Dependencies: Python 3.7+, PyYAML (`pip install pyyaml`).
 """
@@ -31,7 +32,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import List, Tuple
+from typing import Any, Iterator, List, Tuple
 
 try:
     import yaml  # PyYAML
@@ -222,8 +223,27 @@ def check_mcp_json(plugin_root: Path) -> List[Finding]:
     return findings
 
 
+def _iter_hook_commands(node: Any) -> Iterator[str]:
+    """Yield every "command" string value found anywhere in a parsed hooks.json.
+
+    Walks the structure shape-agnostically so CHECK 8c catches inline commands
+    under the nested schema {"hooks": {Event: [{"hooks": [{"command": ...}]}]}},
+    the deprecated flat schema, and any future nesting.
+    """
+    if isinstance(node, dict):
+        cmd = node.get("command")
+        if isinstance(cmd, str):
+            yield cmd
+        for value in node.values():
+            yield from _iter_hook_commands(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _iter_hook_commands(item)
+
+
 def check_hooks(plugin_root: Path) -> List[Finding]:
-    """CHECK 8 — hooks/hooks.json nested schema + no '..' in hook scripts."""
+    """CHECK 8 — hooks/hooks.json nested schema, no '..' in inline hook
+    commands (8c), and no '..' in hook scripts (8b)."""
     hooks_dir = plugin_root / "hooks"
     if not hooks_dir.is_dir():
         return []  # optional directory; absence is fine
@@ -251,6 +271,21 @@ def check_hooks(plugin_root: Path) -> List[Finding]:
                     '[{"matcher": ..., "hooks": [{"type": "command", "command": ...}]}]}}. '
                     "Use ${CLAUDE_PLUGIN_ROOT}/hooks/... for plugin-relative paths."
                 ))
+
+            # CHECK 8c — no '..' traversal in inline hooks.json command strings.
+            # A plugin that inlines "command": "python ../foo/bar.py" has no
+            # shim script for CHECK 8b to scan, so it would otherwise slip past.
+            for cmd in _iter_hook_commands(h):
+                if DOT_DOT_TRAVERSAL_RE.search(cmd):
+                    findings.append(Finding(
+                        "BLOCK", "CHECK 8c: hooks_json_command_path_traversal",
+                        "hooks/hooks.json",
+                        f"inline command contains '..' cross-plugin path "
+                        f"reference: {cmd[:120]}",
+                        "Remove any '../' path segments. Use "
+                        "${CLAUDE_PLUGIN_ROOT}/... for plugin-relative paths, "
+                        "or move the logic into a hook script under hooks/."
+                    ))
 
     # CHECK 8b — no '..' path traversal in any shell/python script under hooks/
     for script_path in hooks_dir.rglob("*"):
@@ -374,7 +409,7 @@ def main(argv: List[str] | None = None) -> int:
         return 2
 
     print(f"PLUGIN PREFLIGHT — validating {len(plugins)} plugin(s)")
-    print(f"Checks: CHECKs 1-8 per plugin-validation-toolkit v1.3.1 "
+    print(f"Checks: CHECKs 1-8 per plugin-validation-toolkit v1.3.2 "
           f"(plugin.json check skips silently when file is absent)")
     print()
 
