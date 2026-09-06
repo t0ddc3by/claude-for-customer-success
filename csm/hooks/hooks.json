@@ -4,7 +4,10 @@
       {
         "matcher": "ask_user_input_v0",
         "hooks": [
-          {"type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"}
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh\""
+          }
         ]
       }
     ],
@@ -12,7 +15,10 @@
       {
         "matcher": "ask_user_input_v0",
         "hooks": [
-          {"type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"}
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh\""
+          }
         ]
       }
     ],
@@ -20,7 +26,10 @@
       {
         "matcher": ".*",
         "hooks": [
-          {"type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"}
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh\""
+          }
         ]
       }
     ]

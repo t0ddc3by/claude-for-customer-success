@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/auq_hook.py"
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/auq_hook.py\""
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/auq_hook.py"
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/auq_hook.py\""
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/auq_hook.py"
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/auq_hook.py\""
           }
         ]
       }

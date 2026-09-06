@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh\""
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh\""
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/run_auq_hook.sh\""
           }
         ]
       }
