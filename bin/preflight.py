@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Plugin preflight validator — 8 known Cowork backend constraint checks.
+Plugin preflight validator — 9 Cowork plugin constraint checks.
 
 Runs against a plugin directory (containing .claude-plugin/plugin.json) and
 exits non-zero if any BLOCK-level finding is detected. Prevents the opaque
@@ -18,8 +18,10 @@ Exit codes:
     2 — usage error or no plugins found
 
 Constraint reference: skills/plugin-preflight-validator/references/known-constraints.md
-Encodes CHECKs 1-8 from plugin-validation-toolkit v1.3.2 (2026-09-04).
+Encodes CHECKs 1-9 from plugin-validation-toolkit v1.3.3 (2026-09-06).
 CHECK 8c (inline hooks.json command traversal) added in v1.3.2.
+CHECK 9 (non-scalar top-level frontmatter key) added in v1.3.3, ported from
+validate-plugin-frontmatter.py R11 — preflight had no equivalent.
 
 Dependencies: Python 3.7+, PyYAML (`pip install pyyaml`).
 """
@@ -49,6 +51,10 @@ PLUGIN_DESC_CEILING = 388          # CHECK 6 (empirical; safe target ≤300)
 VAR_INTERPOLATION_RE = re.compile(r"\$\{[^}]+\}")   # CHECK 7
 DOT_DOT_TRAVERSAL_RE = re.compile(r"\.\./")          # CHECK 8b
 HOOK_SCRIPT_EXTS = {".sh", ".bash", ".py"}           # CHECK 8b
+# CHECK 9 — keys the agentskills.io spec places inside `metadata:`. Seeing one
+# at top level with a list/dict value earns a pointer to its correct home
+# rather than a bare "must be scalar".
+SPEC_METADATA_KEYS = {"tags", "author", "category", "keywords"}
 
 
 class Finding:
@@ -133,6 +139,27 @@ def check_skill_md(skill_path: Path, plugin_root: Path) -> List[Finding]:
             "hyphens, with an optional 'plugin-name:' prefix. Empirically confirmed: "
             "the Cowork validator accepts namespaced names (e.g., 'rev-ops:csql-tracking')."
         ))
+
+    # CHECK 9 — no non-scalar value on a top-level frontmatter key.
+    # `metadata` is exempt by design: the agentskills.io specification puts
+    # structured custom fields (tags, author, category) inside that mapping,
+    # and shipped skills in this repo already use it that way.
+    # Ported from validate-plugin-frontmatter.py R11 (2026-09-06) — preflight
+    # had no equivalent, so this class reached packaged artifacts unflagged.
+    for key, value in fm.items():
+        if key != "metadata" and isinstance(value, (list, dict)):
+            hint = (
+                f"Move it under `metadata:` as a delimited string — that is where "
+                f"the agentskills.io spec puts {key}."
+                if key in SPEC_METADATA_KEYS else
+                "Top-level frontmatter values must be scalars."
+            )
+            findings.append(Finding(
+                "BLOCK", "CHECK 9: nonscalar_top_level_frontmatter_key", str(rel),
+                f"top-level key {key!r} has a non-scalar value "
+                f"({type(value).__name__})",
+                hint
+            ))
 
     # CHECKs 4/5 — nested inside security block (informational if CHECK 1 fires)
     sec = fm.get("security")
@@ -361,7 +388,7 @@ def discover_plugins(parent: Path) -> List[Path]:
 
 def main(argv: List[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Preflight validator for Cowork plugins (CHECKs 1-8).",
+        description="Preflight validator for Cowork plugins (CHECKs 1-9).",
         epilog="Exit codes: 0 = all pass, 1 = BLOCK findings, 2 = usage error"
     )
     parser.add_argument(
@@ -409,7 +436,7 @@ def main(argv: List[str] | None = None) -> int:
         return 2
 
     print(f"PLUGIN PREFLIGHT — validating {len(plugins)} plugin(s)")
-    print(f"Checks: CHECKs 1-8 per plugin-validation-toolkit v1.3.2 "
+    print(f"Checks: CHECKs 1-9 per plugin-validation-toolkit v1.3.3 "
           f"(plugin.json check skips silently when file is absent)")
     print()
 
