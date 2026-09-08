@@ -24,7 +24,7 @@
 plugins:
 
   auq-resilience:
-    version: "1.1.0"
+    version: "1.1.1"
     description: >-
       Resilience layer for AskUserQuestion (AUQ). In Claude Code, hooks enforce
       single-question-per-call, detect render failures, and inject a T2 prose
@@ -46,7 +46,7 @@ plugins:
       email: support@anthropic.com
 
   cs-ops:
-    version: "1.0.1"
+    version: "1.0.2"
     description: >-
       Portfolio health analysis, segmentation modeling, capacity planning,
       playbook auditing, data quality checks, and metric dashboards for Customer
@@ -55,7 +55,7 @@ plugins:
       name: SuccessCOACHING
 
   csm:
-    version: "1.0.7"
+    version: "1.0.8"
     description: >-
       Runs account research, call prep, QBRs, success plans, health score
       reviews, risk flags, TARO play recommendations, and renewal readiness
@@ -64,7 +64,7 @@ plugins:
       name: SuccessCOACHING
 
   handoff:
-    version: "1.0.1"
+    version: "1.0.2"
     description: >-
       Stage 0 Sales-to-CS Handoff — validates incoming accounts, generates
       internal meeting materials, builds customer-facing kickoff packages, and
@@ -75,7 +75,7 @@ plugins:
       email: todd@successhacker.co
 
   onboarding:
-    version: "1.0.1"
+    version: "1.0.2"
     description: >-
       Kickoff prep, onboarding plans, success criteria definition, milestone
       tracking, blocker reviews, time-to-value analysis, and handoff
@@ -85,7 +85,7 @@ plugins:
       name: SuccessCOACHING
 
   renewals:
-    version: "1.0.1"
+    version: "1.0.2"
     description: >-
       Renewal forecasting, churn risk assessment, expansion signal detection,
       negotiation prep, price increase planning, and executive renewal summaries
@@ -94,7 +94,7 @@ plugins:
       name: SuccessCOACHING
 
   rev-ops:
-    version: "1.1.1"
+    version: "1.1.2"
     description: >-
       Forecast intelligence, pipeline health, annual planning, CRM data quality,
       revenue continuity, and deal desk governance for RevOps leads, CROs, and
@@ -103,7 +103,7 @@ plugins:
       name: SuccessCOACHING
 
   vbs:
-    version: "0.4.2"
+    version: "0.4.3"
     description: >-
       Value-Based Selling craft for AEs, SEs, and quota-carrying CSMs: Three Whys
       discovery, outcome qualification, keepability gate, call prep, stakeholder
@@ -113,7 +113,7 @@ plugins:
       name: SuccessCOACHING
 
   vfa:
-    version: "0.3.2"
+    version: "0.3.3"
     description: >-
       Value-First Acquisition for revenue leaders, GTM strategists, and RevOps:
       PMF existence proof, ICP eligibility, ICVP value-fit gating, and drift

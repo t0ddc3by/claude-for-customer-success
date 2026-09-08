@@ -699,7 +699,7 @@ To add a cookbook for a different role, motion, or deployment variant, follow th
 
 ## AUQ Resilience
 
-**Package:** [`auq-resilience/`](./auq-resilience/) · **Distributed:** [`dist/auq-resilience-v1.1.0.plugin`](./dist/)
+**Package:** [`auq-resilience/`](./auq-resilience/) · **Distributed:** [`dist/auq-resilience-v1.1.1.plugin`](./dist/)
 
 The CS plugins use `AskUserQuestion` (AUQ) extensively for cold-start interviews, skill mode selection, and interactive clarification. When AUQ works, the user gets an interactive multiple-choice widget. When it fails (unsupported client, missed render, tool error), Claude receives an empty response with no recoverable path. Without a fallback, the entire skill interaction stops.
 

@@ -7,6 +7,19 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.1] — 2026-09-06
+
+### Fixed
+- All nine plugin `hooks/hooks.json` files now quote `"${CLAUDE_PLUGIN_ROOT}"` in every
+  hook command. The desktop app installs plugins under a path containing a space
+  (`~/Library/Application Support/...`) and substitutes the plugin root as text, so
+  the unquoted form word-split and every PreToolUse hook failed, blocking Write/Edit
+  in subagent sessions. Patch releases: csm 1.0.8, cs-ops 1.0.2, onboarding 1.0.2,
+  renewals 1.0.2, rev-ops 1.1.2, vbs 0.4.3, vfa 0.3.3, handoff 1.0.2,
+  auq-resilience 1.1.1; `dist/` archives rebuilt and superseded ones removed.
+
+---
+
 ## [1.2.0] — 2026-05-29
 
 ### Added

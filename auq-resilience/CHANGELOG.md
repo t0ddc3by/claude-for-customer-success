@@ -7,6 +7,15 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.1] — 2026-09-06
+
+### Fixed
+- `hooks/hooks.json`: hook commands now quote `"${CLAUDE_PLUGIN_ROOT}"` so a plugin
+  root containing a space (desktop app install path) no longer word-splits and
+  breaks every hook invocation.
+
+---
+
 ## [1.1.0] — 2026-05-29
 
 ### Added

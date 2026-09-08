@@ -174,6 +174,7 @@ If another C4CS plugin is already installed, cold-start reads your existing
 
 | Version | Date | Changes |
 |---------|------|---------|
+| v1.1.2 | 2026-09-06 | Quoted `"${CLAUDE_PLUGIN_ROOT}"` in `hooks/hooks.json` commands so hooks run from install paths containing a space (desktop app). |
 | v1.1.0 | 2026-05-15 | Added `planning-cycle-orchestrator` managed agent cookbook — 5-phase GTM planning cycle with phase-gate governance, HubSpot pipeline criteria, and Slack digest delivery. Completes the 5-cookbook managed agent suite. |
 | v1.0.0 | 2026-03 | Initial release — 31 skills across 8 skill areas, 4 managed agent cookbooks (gtm-pulse-runner, capacity-monitor, churn-signal-scanner, deal-desk-watcher). |
 
