@@ -2,8 +2,9 @@
 name: success-plan-canvas
 description: "Generates and refreshes structured Customer Success Plan canvas documents for a specific account and lifecycle stage. Supports three plan types: initial onboarding, pre-expansion, and pre-renewal review. OCV-aware: reads Outcome & Value Catalog snapshot data to surface gaps and delivered outcomes."
 version: "1.0.0"
-author: todd@successhacker.co
-tags: [csm, success-plan, canvas, customer-success]
+metadata:
+  author: "todd@successhacker.co"
+  tags: "csm success-plan canvas customer-success"
 deployment_target: plugin
 ---
 

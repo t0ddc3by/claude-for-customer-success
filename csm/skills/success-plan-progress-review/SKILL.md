@@ -2,8 +2,9 @@
 name: success-plan-progress-review
 description: "Reviews an existing success plan canvas and generates a structured progress review artifact with milestone scorecard, OCV outcome ratings, CSM action list, and optional customer-facing summary and QBR pre-work note."
 version: "1.0.0"
-author: todd@successhacker.co
-tags: [csm, success-plan, progress-review, customer-success]
+metadata:
+  author: "todd@successhacker.co"
+  tags: "csm success-plan progress-review customer-success"
 deployment_target: plugin
 ---
 

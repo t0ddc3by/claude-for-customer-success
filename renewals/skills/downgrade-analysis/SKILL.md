@@ -2,8 +2,9 @@
 name: downgrade-analysis
 description: "Analyzes customer contract downgrade requests (contraction only) and produces a value chain failure map, counter-proposal inputs, and recommended response strategy for CSM/AM negotiation. Scoped to contraction scenarios — full cancellation redirected to renewals:churn-rca."
 version: "1.0.0"
-author: todd@successhacker.co
-tags: [renewals, downgrade, contraction, churn-prevention, customer-success]
+metadata:
+  author: "todd@successhacker.co"
+  tags: "renewals downgrade contraction churn-prevention customer-success"
 deployment_target: plugin
 ---
 

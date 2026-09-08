@@ -2,8 +2,9 @@
 name: churn-rca
 description: "Root cause analysis for individual customer churn events and cohort-level churn pattern analysis. Produces structured RCA with root cause taxonomy, contributing factors, timeline reconstruction, and remediation pathway. Scoped to full cancellation — contract contraction redirected to renewals:downgrade-analysis."
 version: "1.0.0"
-author: todd@successhacker.co
-tags: [renewals, churn, rca, root-cause, customer-success]
+metadata:
+  author: "todd@successhacker.co"
+  tags: "renewals churn rca root-cause customer-success"
 deployment_target: plugin
 ---
 
