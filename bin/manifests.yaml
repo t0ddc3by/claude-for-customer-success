@@ -85,7 +85,7 @@ plugins:
       name: SuccessCOACHING
 
   renewals:
-    version: "1.0.2"
+    version: "1.0.3"
     description: >-
       Renewal forecasting, churn risk assessment, expansion signal detection,
       negotiation prep, price increase planning, and executive renewal summaries
@@ -94,31 +94,10 @@ plugins:
       name: SuccessCOACHING
 
   rev-ops:
-    version: "1.1.2"
+    version: "1.1.3"
     description: >-
       Forecast intelligence, pipeline health, annual planning, CRM data quality,
       revenue continuity, and deal desk governance for RevOps leads, CROs, and
       CS Ops owning revenue operations.
-    author:
-      name: SuccessCOACHING
-
-  vbs:
-    version: "0.4.3"
-    description: >-
-      Value-Based Selling craft for AEs, SEs, and quota-carrying CSMs: Three Whys
-      discovery, outcome qualification, keepability gate, call prep, stakeholder
-      influence, value narrative, negotiation prep, objection reframing. Deal
-      stratum of Claude for VBS — outcome-aligned, survivable sales.
-    author:
-      name: SuccessCOACHING
-
-  vfa:
-    version: "0.3.3"
-    description: >-
-      Value-First Acquisition for revenue leaders, GTM strategists, and RevOps:
-      PMF existence proof, ICP eligibility, ICVP value-fit gating, and drift
-      monitoring. The system stratum of the Claude for Value-Based Selling
-      add-on. Answers 'who should want to buy?' with gates trained on
-      realized-value evidence, not reachability.
     author:
       name: SuccessCOACHING

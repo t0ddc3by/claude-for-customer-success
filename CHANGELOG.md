@@ -7,6 +7,28 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.3.0] — 2026-09-28
+
+### Removed
+- The Value-Based Selling expansion pack (`vbs` 0.4.3, `vfa` 0.3.3) moved to the
+  `claude-for-atlas` repository for validation ahead of public availability: plugin
+  directories, `dist/` archives, the three expansion-pack managed-agent cookbooks
+  (`loop-runner`, `drift-sentinel`, `deal-alignment-watcher`), and the
+  `solo-sales-cookbook.md` deployment guide. Development continues as `atlas-vbs`
+  / `atlas-vfa` in `claude-for-atlas`.
+- `bin/manifests.yaml` entries for `vbs` and `vfa`.
+
+### Changed
+- `renewals` **v1.0.3** — `churn-analysis` restored to its pre-expansion version
+  (FM-taxonomy addendum removed; it ships with `atlas-renewals`).
+- `rev-ops` **v1.1.3** — `sales-cs-handoff-quality-scoring` restored to its
+  pre-expansion version (dimension 6 removed; it ships with `atlas-rev-ops`).
+- `deployment-cookbooks/solo-post-sales-cookbook.md` restored to its original
+  `solo-csm-cookbook.md` name and framing; the post-sales reframe continues in
+  `claude-for-atlas`.
+
+---
+
 ## [1.2.1] — 2026-09-06
 
 ### Fixed
